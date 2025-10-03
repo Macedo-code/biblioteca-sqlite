@@ -51,3 +51,27 @@ def lista_livros():
     finally:
         if conexao:
             conexao.close
+
+def atualizar_disp(id_livro, new_disp):
+    try:
+        conexao = sqlite3.connect("biblioteca.db")
+        cursor = conexao.cursor()
+
+        cursor.execute("""
+        UPDATE livros SET disponibilidade = ? WHERE id = ?""", 
+        (new_disp, id_livro))
+
+        conexao.commit()
+
+        if cursor.rowcount > 0:
+            print(f"ID:{id_livro} foi alterada!")
+
+        else:
+            print(f"Nenhum livro cadastrado com esse ID: {id_livro}")
+    
+    except sqlite3.error as error:
+        print(f"erro ao tentar alterar disponibilidade", {error})
+
+    finally:
+        if conexao:
+            conexao.close()
