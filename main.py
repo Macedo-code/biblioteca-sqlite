@@ -96,3 +96,36 @@ def remover_livro(id_livro):
     finally:
         if conexao:
             conexao.close()
+
+def menu():
+    while True:
+        print("\n Biblioteca Pablones")
+        print(" 1 - Adicionar Livros")
+        print(" 2 - Mostrar Livros")
+        print(" 3 - Mudar Disponibilidade")
+        print(" 4 - Excluir Livros")
+        print(" 5 - Sair")
+        opcao = input("Escolha uma opção: ").strip()
+        match opcao:
+            case "1":
+                nome_livro = input("Digite o título do Livro: ").lower().strip()
+                autor_livro = input("Digite o nome do autor: ").lower().strip()
+                ano = int(input(f"Digite o ano de publicação de {nome_livro}: "))
+                add_livro(nome_livro, autor_livro , ano)
+
+            case "2": 
+                lista_livros()
+
+            case "3": 
+                id_livro = int(input("Digite o ID do livro: "))
+                new_disp = input("Digite a nova disponibilidade ('S', 'N'): ")
+                atualizar_disp(id_livro, new_disp)
+
+            case "4":
+                excluir = int(input("Digite o ID do livro que deseja deletar: "))
+                remover_livro(excluir)
+            case "5":
+                print("Acesso encerrado")
+                break
+
+menu()
