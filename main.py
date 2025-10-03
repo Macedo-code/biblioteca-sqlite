@@ -75,3 +75,24 @@ def atualizar_disp(id_livro, new_disp):
     finally:
         if conexao:
             conexao.close()
+
+def remover_livro(id_livro):
+    try:
+        conexao = sqlite3.connect("biblioteca.db")
+        cursor = conexao.cursor()
+
+        cursor.execute("DELETE FROM livros WHERE id =?", (id_livro,))
+        conexao.commit()
+
+        if cursor.rowcount > 0:
+            print("Livro deletado com sucesso!")
+
+        else:
+            print("Nenhum Livro cadastrado com ID fornecido!")
+    
+    except sqlite3.Error as error:
+        print(f"Erro ao tentar deletar o Livro",{error})
+
+    finally:
+        if conexao:
+            conexao.close()
